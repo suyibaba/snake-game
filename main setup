@@ -1,0 +1,46 @@
+import turtle
+from turtle import Screen
+from snakky import Snake
+from food import Food
+from scoreboard import Scoreboard
+
+import time
+ss = Snake()
+f = Food()
+s = Screen()
+sc = Scoreboard()
+
+s.setup(width=500, height=500)
+s.tracer(5)
+s.bgcolor("grey")
+s.title("Snakky")
+s.listen()
+s.onkey(ss.up, "Up")
+s.onkey(ss.down, "Down")
+s.onkey(ss.left, "Left")
+s.onkey(ss.right, "Right")
+
+
+
+segments = []
+
+
+
+start_game = True
+
+while start_game:
+    s.update()
+    time.sleep(0.1)
+    ss.movee()
+    if ss.head.distance(f) < 15:
+        f.refresh()
+        sc.i_s()
+
+    # Detect collision with wall.
+    if ss.head.xcor() > 205 or ss.head.xcor() < -205 or ss.head.ycor() > 205 or ss.head.ycor() < -205:
+        start_game = False
+        sc.game_over()
+
+
+turtle.penup()
+s.exitonclick()
